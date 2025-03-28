@@ -7,16 +7,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'):
     else:
         setcookie('username', '', time() - 3600);
     endif;
+    header('Location: ' . $_SERVER['PHP_SELF']);
 endif;
 ?>
 
 <form style="display: flex; flex-direction: column; margin: auto; width: 20rem; margin-top: 10rem;"
     action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
-    <input type="text" name="username" value="<?php echo isset($_COOKIE['username']) ? $_COOKIE['username'] : ''; ?>"
-        placeholder="Username" />
+    <?php
+    $checked = isset($_COOKIE['username']) ? 'checked' : '';
+    ?>
+
+    <input type="text" name="username" id="username" value="<?php echo $_COOKIE['username'] ?? ''; ?>"
+        placeholder="Username" checked="
+        <?php echo $checked?>
+        " />
     <label for="username">Username</label>
-    
+
     <input type="checkbox" name="remember" />
     <label for="remember">Remember me</label>
     <input type="submit" />
