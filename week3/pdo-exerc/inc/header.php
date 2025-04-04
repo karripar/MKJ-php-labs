@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ .'/../config/config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,4 +13,18 @@
     <title>MediaItems</title>
   </head>
   <body>
-    <div class="container"></div>
+    <div class="container">
+      <header>
+        <h1>MediaItems</h1>
+        <nav>
+          <ul>
+            <li>
+              <a href="<?php echo $site_url; ?>">Home</a>
+            </li>
+            <li>
+              <a href="<?php echo $site_url; ?>/user.php">Login/Register</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+    </div>

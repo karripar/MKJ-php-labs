@@ -1,9 +1,11 @@
 <?php
 // upload.php
+session_start();
 
 require_once __DIR__ . '/../db/dbconnect.php';
+require_once __DIR__ .'/../config/config.php';
 
-if (!empty($_FILES['file']) && !empty($_POST['title']) && !empty($_POST['user_id']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+if (!empty($_FILES['file']) && !empty($_POST['title']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
     $filename = $_FILES['file']['name'];
     $filesize = $_FILES['file']['size'];
     $filetype = $_FILES['file']['type'];
@@ -12,7 +14,7 @@ if (!empty($_FILES['file']) && !empty($_POST['title']) && !empty($_POST['user_id
 
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $user_id = $_POST['user_id'] ?? 1; // Default to 1 if not set
+    $user_id = $_SESSION['user']['user_id'] ?? 1; // Default to 1 if not set
 
     // Allow any image or video MIME type
     if (strpos($filetype, 'image/') === 0 || strpos($filetype, 'video/') === 0) {
@@ -42,6 +44,11 @@ if (!empty($_FILES['file']) && !empty($_POST['title']) && !empty($_POST['user_id
         $STH = $DBH->prepare($sql);
         $STH->execute($data);
         echo 'Data inserted successfully';
+        if ($STH->rowCount() > 0) {
+            header('Location: ' . $site_url);
+        } else {
+            echo 'No rows inserted. Check your data.';
+        }
     } catch (PDOException $err) {
         echo 'Error inserting data: ' . $err->getMessage();
         file_put_contents(__DIR__ . '/../logs/PDOErrors.txt', 'insertData - ' . $err->getMessage(), FILE_APPEND);

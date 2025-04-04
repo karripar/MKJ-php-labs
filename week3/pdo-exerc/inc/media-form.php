@@ -13,7 +13,6 @@
               <div class="form-control">
                 <input type="file" name="file" id="file" />
               </div>
-              <input type="hidden" name="user_id" value="1" />
               <button type="submit">Upload</button>
             </form>
           </section>
