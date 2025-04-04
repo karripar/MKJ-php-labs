@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../dbconfig.php';
+require_once __DIR__ . '/../config/config.php';
 
 if (!empty($_POST['media_id']) && !empty($_POST['user_id'])) {
     $title = $_POST['title'];
@@ -19,6 +20,13 @@ if (!empty($_POST['media_id']) && !empty($_POST['user_id'])) {
 
         $STH = $DBH->prepare($sql);
         $STH->execute($data);
+        echo $STH->rowCount();
+
+        if ($STH->rowCount() > 0) {
+            header('Location: '.$site_url);
+        } else {
+            echo 'No rows updated. Check if the media_id and user_id match.';
+        }
 
     } catch (Exception $e) {
         echo 'Error updating data: ' . $e->getMessage();
