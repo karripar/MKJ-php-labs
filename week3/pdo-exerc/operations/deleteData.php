@@ -26,7 +26,8 @@ if (!empty($_POST['media_id'])) {
     $filesql .= " AND user_id = :user_id";
     $sql .= " AND user_id = :user_id";
     $data['user_id'] = $_SESSION['user']['user_id'];
-  };
+  }
+  ;
 
 
 
@@ -44,7 +45,7 @@ if (!empty($_POST['media_id'])) {
     } else {
       echo "No file deleted. Check if the media_id exists.";
     }
-    
+
 
     if ($STH->rowCount() > 0) {
       echo "Data deleted successfully.";
